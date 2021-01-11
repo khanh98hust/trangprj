@@ -1,37 +1,29 @@
 <template>
   <div style="margin-top: 100px">
-    <div class="row">
-      <div class="col-3 boder">
-        <div>
-          <!-- Via multiple directive modifiers -->
-          <b-button v-b-toggle.collapse-a.collapse-b
-            >Toggle Collapse A and B</b-button
-          >
-          <!-- Elements to collapse -->
-          <b-collapse id="collapse-a" class="mt-2">
-            <b-card>I am collapsible content A!</b-card>
-          </b-collapse>
-          <b-collapse id="collapse-b" class="mt-2">
-            <b-card>I am collapsible content B!</b-card>
-          </b-collapse>
-        </div>
-      </div>
       <div class="container">
-        <div class="row">
-          <div class="col-md-9">
-            <div class="title"><span>Sản phẩm mới</span></div>
+            <div class="title"><h2>Sản phẩm mới</h2></div>
+            <hr>
+            <div class="d-flex flex-wrap">
+              <Product
+                v-for="item in newProduct"
+                :key="item._id"
+                :item="item"
+                style="border: 1px solid #e0e0e0"
+              ></Product>
+            </div>
+            <hr>
+            <div><h2>Tất cả sản phẩm</h2></div>
+            <hr>
             <div class="d-flex flex-wrap">
               <Product
                 v-for="item in allProduct"
                 :key="item._id"
                 :item="item"
+                style="border: 1px solid #e0e0e0"
               ></Product>
             </div>
             <div class="clearfix"></div>
           </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -49,7 +41,7 @@ export default {
     this.getProduct();
   },
   computed: {
-    ...mapGetters(["allProduct"]),
+    ...mapGetters(["allProduct", "newProduct"]),
   },
 };
 </script>

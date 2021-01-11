@@ -5,15 +5,15 @@
             <h2>Đăng nhập</h2>
             <label>
                 <span>Email</span>
-                <input type="email" />
+                <input v-model="loginEmail" type="email" />
             </label>
             <label>
                 <span>Password</span>
-                <input type="password" />
+                <input v-model="loginPassword" type="password" />
             </label>
             <p class="forgot-pass">Forgot password?</p>
-            <button type="button" class="submit">Sign In</button>
-            <button type="button" class="fb-btn">Connect with <span>facebook</span></button>
+            <button type="button" class="submit" @click="login">Sign In</button>
+            <button type="button" class="fb-btn" to="/">Connect with <span>facebook</span></button>
         </div>
         <div class="sub-cont">
             <div class="img">
@@ -33,18 +33,22 @@
             <div class="form sign-up">
                 <h2>Đăng ký</h2>
                 <label>
-                    <span>Name</span>
-                    <input type="text" />
+                    <span>Tên</span>
+                    <input v-model="username" type="text" />
                 </label>
                 <label>
                     <span>Email</span>
-                    <input type="email" />
+                    <input v-model="email" type="email" />
                 </label>
                 <label>
-                    <span>Password</span>
-                    <input type="password" />
+                    <span>Số điện thoại</span>
+                    <input v-model="phonenumber" type="email" />
                 </label>
-                <button type="button" class="submit">Sign Up</button>
+                <label>
+                    <span>Mật khẩu</span>
+                    <input v-model="password" type="password" />
+                </label>
+                <button type="button" class="submit" @click="register">Sign Up</button>
                 <button type="button" class="fb-btn">Join with <span>facebook</span></button>
             </div>
         </div>
@@ -60,14 +64,49 @@
 </template>
 
 <script>
+import api from '../service/api';
 export default {
     mounted() {
         document.querySelector('.img__btn').addEventListener('click', function () {
             document.querySelector('.cont').classList.toggle('s--signup');
         });
+    },
+    data(){
+        return{
+            username: "",
+            email: "",
+            phonenumber: null,
+            password: "",
+            verify: "",
+            loginPassword: "",
+            loginEmail: "",
+        }
+    },
+    methods : {
+        login(){
+        // submit form to server/API here...
+        api.post('/login', {
+          email : this.loginEmail,
+          password : this.loginPassword
+        }).then(res => {
+          localStorage.setItem('user', res.data.token)
+          window.location.href = '/'
+        }).catch(err => console.log(err))
+      },
+    async register(){
+      // console.log(this.$refs);
+      await api.post('/dangky', {
+        username : this.username,
+        email : this.email,
+        phonenumber : this.phonenumber,
+        password : this.password
+      })
+      return window.location.href = '/login'
+    }
     }
 }
 </script>
+
 <style lang="scss" scoped>
 *,
 *:before,

@@ -1,12 +1,13 @@
 <template>
-  <div class="col-sm-4 col-md-3 hidden-sm hidden-xs box-product-outer ml-5">
+  <div class="col-sm-3 col-md-3 hidden-sm hidden-xs box-product-outer mb-5" style="margin-right : 80px">
     <div class="box-product">
       <div class="img-wrapper">
-        <router-link to="product/detail">
-          <img alt="Product" :src="`http://localhost:8000/${item.Img}`" />
+        <router-link :to="`product/detail/${item._id}`">
+          <img style="height : 200px" alt="Product" :src="`http://localhost:8000/${item.Img}`" />
         </router-link>
         <div class="option">
           <a
+            @click="addToCart"
             href="#"
             data-toggle="tooltip"
             data-placement="bottom"
@@ -59,6 +60,14 @@
 <script>
 export default {
   props: ["item"],
+  methods: {
+    addToCart(){
+            this.$store.dispatch('addProductToCart', {
+                product : this.item,
+                quantity : 1
+            })
+            }
+  },
 };
 </script>
 

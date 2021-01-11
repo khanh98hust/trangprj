@@ -24,7 +24,8 @@
 <script>
 import Carousel from "../components/shared/Carousel";
 export default {
-  components: { Carousel }
+  components: { Carousel },
+
 };
 </script>
 

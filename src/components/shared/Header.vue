@@ -21,17 +21,17 @@
                 >Tìm kiếm</b-button
               >
             </b-nav-form>
-            <div class="text-center mt-2">
-              <b-button variant="primary">
+            <div class="text-center mt-3">
+              <b-button variant="primary" to="/cart">
                 <i class="fas fa-cart-plus"></i>
-                <b-badge variant="light" class="ml-1">4</b-badge>
+                <b-badge variant="light" class="ml-1">{{count}}</b-badge>
               </b-button>
             </div>
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
               <template #button-content>
                 <em>
-                  <b-avatar></b-avatar>
+                  <b-avatar size="3rem">{{$store.state.user.username}}</b-avatar>
                 </em>
               </template>
               <b-dropdown-item href="#">Profile</b-dropdown-item>
@@ -45,7 +45,19 @@
 </template>
 
 <script>
-export default {};
+import {mapMutations, mapGetters} from 'vuex';
+export default {
+    methods: {
+    ...mapMutations(['setUser', 'Cart'])
+  },
+  mounted(){
+    this.setUser(),
+    this.Cart()
+  },
+  computed:{
+    ...mapGetters(['count'])
+  }
+};
 </script>
 
 <style scoped>
